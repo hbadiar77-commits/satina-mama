@@ -823,33 +823,10 @@ const POSSystem = () => {
   );
 };
 
-// Simple placeholder components for other routes
-const OrdersManagement = () => (
-  <div className="p-6">
-    <h1 className="text-3xl font-bold text-gray-800 mb-6">Gestion des Commandes</h1>
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <p className="text-gray-600">Interface de gestion des commandes en développement...</p>
-    </div>
-  </div>
-);
-
-const CustomersManagement = () => (
-  <div className="p-6">
-    <h1 className="text-3xl font-bold text-gray-800 mb-6">Gestion des Clients</h1>
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <p className="text-gray-600">Interface de gestion des clients en développement...</p>
-    </div>
-  </div>
-);
-
-const StockManagement = () => (
-  <div className="p-6">
-    <h1 className="text-3xl font-bold text-gray-800 mb-6">Gestion du Stock</h1>
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <p className="text-gray-600">Interface de gestion du stock en développement...</p>
-    </div>
-  </div>
-);
+// Import the complete components
+import OrdersManagement from './components/OrdersManagement';
+import CustomersManagement from './components/CustomersManagement';
+import StockManagement from './components/StockManagement';
 
 // Main App Component
 function App() {
