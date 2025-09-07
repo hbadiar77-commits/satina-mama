@@ -103,7 +103,7 @@ class CommerceAPITester:
             "cost_price": 700.00,
             "category_id": category_id,
             "sku": "IP15-TEST-001",
-            "barcode": "1234567890123",
+            "barcode": f"TEST{datetime.now().strftime('%Y%m%d%H%M%S')}",
             "stock_quantity": 25,
             "min_stock_level": 5,
             "is_active": True
