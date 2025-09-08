@@ -353,12 +353,7 @@ const CustomersManagement = () => {
                       <CurrencyAmount amount={selectedCustomer.total_purchases || 0} />
                     </p>
                   </div>
-                  <div className="bg-yellow-50 p-4 rounded-lg">
-                    <p className="text-yellow-800 text-sm font-medium">Points de Fidélité</p>
-                    <p className="text-2xl font-bold text-yellow-900">
-                      {selectedCustomer.loyalty_points} ⭐
-                    </p>
-                  </div>
+
                   <div className="bg-blue-50 p-4 rounded-lg">
                     <p className="text-blue-800 text-sm font-medium">Nombre de Commandes</p>
                     <p className="text-2xl font-bold text-blue-900">
