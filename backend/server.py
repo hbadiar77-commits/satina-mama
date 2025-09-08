@@ -183,6 +183,7 @@ class ProductCreate(BaseModel):
     price: float
     cost_price: Optional[float] = None
     category_id: Optional[str] = None
+    supplier_id: Optional[str] = None
     sku: Optional[str] = None
     barcode: Optional[str] = None
     stock_quantity: int = 0
