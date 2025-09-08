@@ -45,6 +45,48 @@ class PaymentStatus(str, Enum):
     COMPLETED = "completed"
     FAILED = "failed"
 
+class Currency(str, Enum):
+    GNF = "GNF"
+    USD = "USD" 
+    EUR = "EUR"
+
+
+# =================== CURRENCY MODELS ===================
+class CurrencySettings(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    base_currency: Currency = Currency.GNF
+    exchange_rates: Dict[str, float] = {
+        "GNF": 1.0,      # Base currency
+        "USD": 0.00012,  # 1 GNF = 0.00012 USD
+        "EUR": 0.00011   # 1 GNF = 0.00011 EUR
+    }
+    currency_formats: Dict[str, Dict[str, Any]] = {
+        "GNF": {
+            "symbol": "GNF",
+            "position": "after",
+            "decimal_places": 0,
+            "thousands_separator": " "
+        },
+        "USD": {
+            "symbol": "$",
+            "position": "before", 
+            "decimal_places": 2,
+            "thousands_separator": ","
+        },
+        "EUR": {
+            "symbol": "€",
+            "position": "after",
+            "decimal_places": 2,
+            "thousands_separator": " "
+        }
+    }
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+class CurrencySettingsUpdate(BaseModel):
+    base_currency: Optional[Currency] = None
+    exchange_rates: Optional[Dict[str, float]] = None
+
 
 # =================== MODELS ===================
 
@@ -72,7 +114,7 @@ class Product(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str
     description: Optional[str] = None
-    price: float
+    price: float  # Stored in base currency (GNF)
     cost_price: Optional[float] = None
     category_id: Optional[str] = None
     sku: Optional[str] = None
@@ -98,8 +140,7 @@ class ProductCreate(BaseModel):
     is_active: bool = True
 
 class ProductUpdate(BaseModel):
-    name: Optional[str] = None
-    description: Optional[str] = None
+    name: Optional[str] = None description: Optional[str] = None
     price: Optional[float] = None
     cost_price: Optional[float] = None
     category_id: Optional[str] = None
@@ -120,7 +161,7 @@ class Customer(BaseModel):
     address: Optional[str] = None
     city: Optional[str] = None
     postal_code: Optional[str] = None
-    total_purchases: float = 0.0
+    total_purchases: float = 0.0  # In base currency
     loyalty_points: int = 0
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -146,18 +187,19 @@ class OrderItem(BaseModel):
     product_id: str
     product_name: str
     quantity: int
-    unit_price: float
-    total_price: float
+    unit_price: float  # In base currency
+    total_price: float  # In base currency
 
 class Order(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     customer_id: Optional[str] = None
     customer_name: Optional[str] = None
     items: List[OrderItem]
-    subtotal: float
+    subtotal: float  # In base currency
     tax_amount: float = 0.0
     discount_amount: float = 0.0
-    total_amount: float
+    total_amount: float  # In base currency
+    currency: Currency = Currency.GNF
     status: OrderStatus = OrderStatus.PENDING
     payment_method: Optional[PaymentMethod] = None
     payment_status: PaymentStatus = PaymentStatus.PENDING
@@ -206,6 +248,63 @@ class DashboardStats(BaseModel):
     low_stock_products: int
     recent_orders: List[Order]
     top_selling_products: List[Dict[str, Any]]
+
+
+# =================== CURRENCY ENDPOINTS ===================
+
+@api_router.get("/currency/settings", response_model=CurrencySettings)
+async def get_currency_settings():
+    settings = await db.currency_settings.find_one()
+    if not settings:
+        # Create default settings
+        default_settings = CurrencySettings()
+        await db.currency_settings.insert_one(default_settings.dict())
+        return default_settings
+    return CurrencySettings(**settings)
+
+@api_router.put("/currency/settings", response_model=CurrencySettings)
+async def update_currency_settings(settings_update: CurrencySettingsUpdate):
+    existing_settings = await db.currency_settings.find_one()
+    if not existing_settings:
+        # Create default if doesn't exist
+        existing_settings = CurrencySettings().dict()
+        await db.currency_settings.insert_one(existing_settings)
+    
+    update_data = {k: v for k, v in settings_update.dict().items() if v is not None}
+    update_data["updated_at"] = datetime.utcnow()
+    
+    await db.currency_settings.update_one({}, {"$set": update_data})
+    updated_settings = await db.currency_settings.find_one()
+    return CurrencySettings(**updated_settings)
+
+@api_router.get("/currency/convert")
+async def convert_currency(amount: float, from_currency: Currency, to_currency: Currency):
+    settings = await get_currency_settings()
+    
+    if from_currency == to_currency:
+        return {"amount": amount, "converted_amount": amount, "rate": 1.0}
+    
+    # Convert to base currency first (GNF)
+    if from_currency != Currency.GNF:
+        base_amount = amount / settings.exchange_rates[from_currency.value]
+    else:
+        base_amount = amount
+    
+    # Convert from base to target currency
+    if to_currency != Currency.GNF:
+        converted_amount = base_amount * settings.exchange_rates[to_currency.value]
+    else:
+        converted_amount = base_amount
+    
+    rate = converted_amount / amount if amount != 0 else 0
+    
+    return {
+        "amount": amount,
+        "converted_amount": round(converted_amount, 2),
+        "rate": rate,
+        "from_currency": from_currency.value,
+        "to_currency": to_currency.value
+    }
 
 
 # =================== CATEGORY ENDPOINTS ===================
@@ -400,6 +499,7 @@ async def create_order(order: OrderCreate):
         "subtotal": subtotal,
         "tax_amount": tax_amount,
         "total_amount": total_amount,
+        "currency": Currency.GNF,  # Default currency
         "status": OrderStatus.PENDING,
         "payment_status": PaymentStatus.PENDING
     })
@@ -431,7 +531,7 @@ async def create_order(order: OrderCreate):
             {
                 "$inc": {
                     "total_purchases": total_amount,
-                    "loyalty_points": int(total_amount / 10)  # 1 point per 10 units
+                    "loyalty_points": int(total_amount / 1000)  # 1 point per 1000 GNF
                 }
             }
         )
