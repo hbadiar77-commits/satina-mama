@@ -4,7 +4,9 @@ import "./styles/print.css";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { CurrencyProvider } from './components/CurrencyContext';
+import { ShopProvider } from './components/ShopContext';
 import CurrencySelector from './components/CurrencySelector';
+import ShopSelector from './components/ShopSelector';
 import CurrencyAmount from './components/CurrencyAmount';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
