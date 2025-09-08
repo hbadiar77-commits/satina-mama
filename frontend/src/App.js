@@ -247,6 +247,15 @@ const ProductsManagement = () => {
     }
   };
 
+  const fetchSuppliers = async () => {
+    try {
+      const response = await axios.get(`${API}/suppliers?is_active=true`);
+      setSuppliers(response.data);
+    } catch (error) {
+      console.error("Erreur lors du chargement des fournisseurs:", error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
