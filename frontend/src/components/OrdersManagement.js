@@ -283,11 +283,11 @@ const OrdersManagement = () => {
               <div>
                 <h3 className="text-lg font-semibold mb-3">Résumé Financier</h3>
                 <div className="space-y-2">
-                  <p><strong>Sous-total:</strong> {selectedOrder.subtotal?.toFixed(2)}€</p>
-                  <p><strong>Remise:</strong> -{selectedOrder.discount_amount?.toFixed(2)}€</p>
-                  <p><strong>Taxes:</strong> {selectedOrder.tax_amount?.toFixed(2)}€</p>
+                  <p><strong>Sous-total:</strong> <CurrencyAmount amount={selectedOrder.subtotal || 0} /></p>
+                  <p><strong>Remise:</strong> -<CurrencyAmount amount={selectedOrder.discount_amount || 0} /></p>
+                  <p><strong>Taxes:</strong> <CurrencyAmount amount={selectedOrder.tax_amount || 0} /></p>
                   <p className="text-lg font-bold border-t pt-2">
-                    <strong>Total:</strong> {selectedOrder.total_amount?.toFixed(2)}€
+                    <strong>Total:</strong> <CurrencyAmount amount={selectedOrder.total_amount || 0} />
                   </p>
                 </div>
               </div>
