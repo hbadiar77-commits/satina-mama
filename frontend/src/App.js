@@ -35,8 +35,9 @@ const Navigation = () => {
         <h1 className="text-2xl font-bold text-blue-400">Commerce Pro</h1>
         <p className="text-gray-400 text-sm">Gestion de Magasin</p>
         
-        {/* Currency Selector */}
-        <div className="mt-4 pt-4 border-t border-gray-700">
+        {/* Shop and Currency Selectors */}
+        <div className="mt-4 pt-4 border-t border-gray-700 space-y-3">
+          <ShopSelector className="text-white" />
           <CurrencySelector className="text-white" />
         </div>
       </div>
