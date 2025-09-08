@@ -22,6 +22,7 @@ const Navigation = () => {
     { path: "/products", label: "Produits", icon: "📦" },
     { path: "/orders", label: "Commandes", icon: "📋" },
     { path: "/customers", label: "Clients", icon: "👥" },
+    { path: "/suppliers", label: "Fournisseurs", icon: "🏭" },
     { path: "/stock", label: "Stock", icon: "📈" },
   ];
 
