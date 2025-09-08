@@ -96,7 +96,6 @@ const PrintableReport = ({ type, data, title, onClose }) => {
             <th className="border border-gray-300 px-4 py-3 text-left print:px-2 print:py-2">Client</th>
             <th className="border border-gray-300 px-4 py-3 text-left print:px-2 print:py-2">Contact</th>
             <th className="border border-gray-300 px-4 py-3 text-right print:px-2 print:py-2">Achats Totaux</th>
-            <th className="border border-gray-300 px-4 py-3 text-center print:px-2 print:py-2">Points Fidélité</th>
             <th className="border border-gray-300 px-4 py-3 text-center print:px-2 print:py-2">Date Inscription</th>
           </tr>
         </thead>
