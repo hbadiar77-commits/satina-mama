@@ -170,7 +170,7 @@ const Dashboard = () => {
                     {order.customer_name || "Client anonyme"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {order.total_amount?.toFixed(2)}€
+                    <CurrencyAmount amount={order.total_amount || 0} />
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
