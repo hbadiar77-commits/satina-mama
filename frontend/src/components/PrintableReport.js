@@ -116,9 +116,6 @@ const PrintableReport = ({ type, data, title, onClose }) => {
                 <CurrencyAmount amount={customer.total_purchases || 0} />
               </td>
               <td className="border border-gray-300 px-4 py-3 text-center print:px-2 print:py-2">
-                <span className="font-semibold text-yellow-600">{customer.loyalty_points || 0} ⭐</span>
-              </td>
-              <td className="border border-gray-300 px-4 py-3 text-center print:px-2 print:py-2">
                 {new Date(customer.created_at).toLocaleDateString('fr-FR')}
               </td>
             </tr>
