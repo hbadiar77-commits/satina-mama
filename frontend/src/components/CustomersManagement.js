@@ -343,7 +343,7 @@ const CustomersManagement = () => {
                   <div className="bg-green-50 p-4 rounded-lg">
                     <p className="text-green-800 text-sm font-medium">Total des Achats</p>
                     <p className="text-2xl font-bold text-green-900">
-                      {selectedCustomer.total_purchases?.toFixed(2)}€
+                      <CurrencyAmount amount={selectedCustomer.total_purchases || 0} />
                     </p>
                   </div>
                   <div className="bg-yellow-50 p-4 rounded-lg">
