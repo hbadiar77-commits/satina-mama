@@ -324,6 +324,7 @@ const PrintableReport = ({ type, data, title, onClose }) => {
         {/* Report Content */}
         {type === 'stock' && renderStockReport()}
         {type === 'customers' && renderCustomersReport()}
+        {type === 'suppliers' && renderSuppliersReport()}
         {type === 'orders' && renderOrdersReport()}
 
         {/* Footer */}
