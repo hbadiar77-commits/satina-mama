@@ -1,0 +1,319 @@
+/* Print-specific styles */
+@media print {
+  /* General print styles */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body {
+    font-family: 'Times New Roman', serif !important;
+    font-size: 12pt !important;
+    line-height: 1.4 !important;
+    color: black !important;
+  }
+
+  /* Page setup */
+  @page {
+    size: A4;
+    margin: 1cm;
+  }
+
+  /* Hide screen-only elements */
+  .print\\:hidden {
+    display: none !important;
+  }
+
+  /* Show print-only elements */
+  .print\\:block {
+    display: block !important;
+  }
+
+  .print\\:inline {
+    display: inline !important;
+  }
+
+  .print\\:inline-block {
+    display: inline-block !important;
+  }
+
+  /* Remove shadows and borders for print */
+  .shadow,
+  .shadow-sm,
+  .shadow-md,
+  .shadow-lg,
+  .shadow-xl {
+    box-shadow: none !important;
+  }
+
+  /* Ensure borders are visible */
+  .border {
+    border: 1px solid #000 !important;
+  }
+
+  .border-t {
+    border-top: 1px solid #000 !important;
+  }
+
+  .border-b {
+    border-bottom: 1px solid #000 !important;
+  }
+
+  .border-l {
+    border-left: 1px solid #000 !important;
+  }
+
+  .border-r {
+    border-right: 1px solid #000 !important;
+  }
+
+  .border-gray-300 {
+    border-color: #000 !important;
+  }
+
+  /* Table styles for print */
+  table {
+    page-break-inside: auto;
+    border-collapse: collapse !important;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  th,
+  td {
+    border: 1px solid #000 !important;
+    padding: 8px !important;
+    vertical-align: top;
+  }
+
+  th {
+    background-color: #f0f0f0 !important;
+    font-weight: bold !important;
+  }
+
+  /* Background colors for print */
+  .print\\:bg-white {
+    background-color: white !important;
+  }
+
+  .print\\:bg-gray-200 {
+    background-color: #e5e5e5 !important;
+  }
+
+  .print\\:bg-red-100 {
+    background-color: #ffe5e5 !important;
+  }
+
+  .print\\:bg-red-200 {
+    background-color: #ffcccc !important;
+  }
+
+  .print\\:bg-yellow-100 {
+    background-color: #fffbe5 !important;
+  }
+
+  .print\\:bg-yellow-200 {
+    background-color: #fff7cc !important;
+  }
+
+  .print\\:bg-green-100 {
+    background-color: #e5f7e5 !important;
+  }
+
+  .print\\:bg-green-200 {
+    background-color: #ccf2cc !important;
+  }
+
+  .print\\:bg-blue-100 {
+    background-color: #e5f2ff !important;
+  }
+
+  .print\\:bg-blue-200 {
+    background-color: #cce6ff !important;
+  }
+
+  .print\\:bg-orange-100 {
+    background-color: #fff0e5 !important;
+  }
+
+  .print\\:bg-orange-200 {
+    background-color: #ffe6cc !important;
+  }
+
+  .print\\:bg-purple-100 {
+    background-color: #f0e5ff !important;
+  }
+
+  .print\\:bg-purple-200 {
+    background-color: #e6ccff !important;
+  }
+
+  /* Text colors for print */
+  .print\\:text-black {
+    color: black !important;
+  }
+
+  .print\\:text-gray-800 {
+    color: #333 !important;
+  }
+
+  /* Spacing adjustments for print */
+  .print\\:p-0 {
+    padding: 0 !important;
+  }
+
+  .print\\:px-2 {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .print\\:py-2 {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .print\\:pt-4 {
+    padding-top: 16px !important;
+  }
+
+  .print\\:pt-2 {
+    padding-top: 8px !important;
+  }
+
+  .print\\:mb-6 {
+    margin-bottom: 24px !important;
+  }
+
+  .print\\:mb-4 {
+    margin-bottom: 16px !important;
+  }
+
+  .print\\:mb-2 {
+    margin-bottom: 8px !important;
+  }
+
+  .print\\:mt-4 {
+    margin-top: 16px !important;
+  }
+
+  .print\\:mt-2 {
+    margin-top: 8px !important;
+  }
+
+  .print\\:gap-4 {
+    gap: 16px !important;
+  }
+
+  .print\\:gap-2 {
+    gap: 8px !important;
+  }
+
+  /* Remove rounded corners for print */
+  .print\\:rounded-none {
+    border-radius: 0 !important;
+  }
+
+  /* Width adjustments for print */
+  .print\\:max-w-none {
+    max-width: none !important;
+  }
+
+  .print\\:w-1\\/2 {
+    width: 50% !important;
+  }
+
+  /* Font size adjustments for print */
+  .print\\:text-xl {
+    font-size: 18pt !important;
+  }
+
+  .print\\:text-base {
+    font-size: 12pt !important;
+  }
+
+  /* Page breaks */
+  .page-break-before {
+    page-break-before: always;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+  }
+
+  .page-break-inside-avoid {
+    page-break-inside: avoid;
+  }
+
+  /* Avoid breaking important elements */
+  .invoice-header,
+  .invoice-totals,
+  .report-summary {
+    page-break-inside: avoid;
+  }
+
+  /* Ensure tables don't break badly */
+  tbody tr {
+    page-break-inside: avoid;
+  }
+
+  /* Currency formatting for print */
+  .currency-amount {
+    font-weight: bold;
+  }
+
+  /* Print-specific utility classes */
+  .print-only {
+    display: none;
+  }
+
+  @media print {
+    .print-only {
+      display: block !important;
+    }
+  }
+
+  /* Hide unnecessary elements when printing */
+  .no-print {
+    display: none !important;
+  }
+
+  /* Ensure proper spacing in printed tables */
+  .print-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  .print-table th,
+  .print-table td {
+    border: 1px solid #000;
+    padding: 6px;
+    text-align: left;
+  }
+
+  .print-table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+  }
+
+  /* Print header and footer */
+  .print-header {
+    position: running(header);
+  }
+
+  .print-footer {
+    position: running(footer);
+  }
+
+  @page {
+    @top-center {
+      content: element(header);
+    }
+    @bottom-center {
+      content: element(footer);
+    }
+  }
+}
