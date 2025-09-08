@@ -661,8 +661,7 @@ async def create_order(order: OrderCreate):
             {"id": order.customer_id},
             {
                 "$inc": {
-                    "total_purchases": total_amount,
-                    "loyalty_points": int(total_amount / 1000)  # 1 point per 1000 GNF
+                    "total_purchases": total_amount
                 }
             }
         )
