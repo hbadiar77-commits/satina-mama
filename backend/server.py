@@ -289,6 +289,7 @@ class Product(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class ProductCreate(BaseModel):
+    shop_id: str
     name: str
     description: Optional[str] = None
     price: float
