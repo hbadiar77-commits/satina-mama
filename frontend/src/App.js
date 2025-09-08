@@ -97,7 +97,7 @@ const Dashboard = () => {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Ventes Aujourd'hui</p>
               <p className="text-2xl font-semibold text-gray-900">
-                {stats?.total_sales_today?.toFixed(2) || "0.00"}€
+                <CurrencyAmount amount={stats?.total_sales_today || 0} />
               </p>
             </div>
           </div>
