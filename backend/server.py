@@ -216,7 +216,6 @@ class Customer(BaseModel):
     city: Optional[str] = None
     postal_code: Optional[str] = None
     total_purchases: float = 0.0  # In base currency
-    loyalty_points: int = 0
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class CustomerCreate(BaseModel):
