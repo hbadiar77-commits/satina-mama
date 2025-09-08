@@ -154,6 +154,12 @@ const OrdersManagement = () => {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">Gestion des Commandes</h1>
+        <button
+          onClick={printOrdersReport}
+          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium"
+        >
+          🖨️ Rapport Commandes
+        </button>
       </div>
 
       {/* Filters */}
