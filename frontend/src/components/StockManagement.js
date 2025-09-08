@@ -540,6 +540,19 @@ const StockManagement = () => {
           </div>
         </div>
       )}
+
+      {/* Printable Report */}
+      {showReport && reportData && (
+        <PrintableReport
+          type="stock"
+          data={reportData}
+          title="Rapport de Stock"
+          onClose={() => {
+            setShowReport(false);
+            setReportData(null);
+          }}
+        />
+      )}
     </div>
   );
 };
