@@ -478,6 +478,173 @@ async def convert_currency(amount: float, from_currency: Currency, to_currency: 
     }
 
 
+# =================== SHOP ENDPOINTS ===================
+
+@api_router.post("/shops", response_model=Shop)
+async def create_shop(shop: ShopCreate):
+    # For now, we'll use a default owner_id. In a real app, this would come from authentication
+    shop_dict = shop.dict()
+    shop_dict["owner_id"] = "default-owner-id"  # TODO: Get from current user
+    shop_obj = Shop(**shop_dict)
+    await db.shops.insert_one(shop_obj.dict())
+    return shop_obj
+
+@api_router.get("/shops", response_model=List[Shop])
+async def get_shops(is_active: Optional[bool] = None):
+    filter_dict = {}
+    if is_active is not None:
+        filter_dict["is_active"] = is_active
+    
+    shops = await db.shops.find(filter_dict).to_list(1000)
+    return [Shop(**shop) for shop in shops]
+
+@api_router.get("/shops/{shop_id}", response_model=Shop)
+async def get_shop(shop_id: str):
+    shop = await db.shops.find_one({"id": shop_id})
+    if not shop:
+        raise HTTPException(status_code=404, detail="Shop not found")
+    return Shop(**shop)
+
+@api_router.put("/shops/{shop_id}", response_model=Shop)
+async def update_shop(shop_id: str, shop_update: ShopUpdate):
+    update_data = {k: v for k, v in shop_update.dict().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    
+    update_data["updated_at"] = datetime.utcnow()
+    
+    result = await db.shops.update_one({"id": shop_id}, {"$set": update_data})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Shop not found")
+    
+    updated_shop = await db.shops.find_one({"id": shop_id})
+    return Shop(**updated_shop)
+
+@api_router.delete("/shops/{shop_id}")
+async def delete_shop(shop_id: str):
+    # Check if shop has data (products, customers, etc.)
+    products_count = await db.products.count_documents({"shop_id": shop_id})
+    customers_count = await db.customers.count_documents({"shop_id": shop_id})
+    orders_count = await db.orders.count_documents({"shop_id": shop_id})
+    
+    total_data = products_count + customers_count + orders_count
+    if total_data > 0:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Cannot delete shop. It contains {total_data} records (products, customers, orders)."
+        )
+    
+    result = await db.shops.delete_one({"id": shop_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Shop not found")
+    return {"message": "Shop deleted successfully"}
+
+@api_router.get("/shops/{shop_id}/stats")
+async def get_shop_stats(shop_id: str):
+    # Verify shop exists
+    shop = await db.shops.find_one({"id": shop_id})
+    if not shop:
+        raise HTTPException(status_code=404, detail="Shop not found")
+    
+    today_start = datetime.combine(date.today(), datetime.min.time())
+    today_end = datetime.combine(date.today(), datetime.max.time())
+    
+    # Today's sales for this shop
+    today_orders = await db.orders.find({
+        "shop_id": shop_id,
+        "created_at": {"$gte": today_start, "$lte": today_end},
+        "status": {"$ne": "cancelled"}
+    }).to_list(1000)
+    
+    total_sales_today = sum(order.get("total_amount", 0) for order in today_orders)
+    total_orders_today = len(today_orders)
+    
+    # Total counts for this shop
+    total_customers = await db.customers.count_documents({"shop_id": shop_id})
+    total_products = await db.products.count_documents({"shop_id": shop_id, "is_active": True})
+    
+    # Low stock products for this shop
+    all_products = await db.products.find({"shop_id": shop_id, "is_active": True}).to_list(1000)
+    low_stock_count = sum(1 for p in all_products if p.get("stock_quantity", 0) <= p.get("min_stock_level", 5))
+    
+    return {
+        "shop_id": shop_id,
+        "shop_name": shop["name"],
+        "total_sales_today": total_sales_today,
+        "total_orders_today": total_orders_today,
+        "total_customers": total_customers,
+        "total_products": total_products,
+        "low_stock_products": low_stock_count
+    }
+
+
+# =================== USER ENDPOINTS ===================
+
+@api_router.post("/users", response_model=User)
+async def create_user(user: UserCreate):
+    # Check if username or email already exists
+    existing_user = await db.users.find_one({
+        "$or": [
+            {"username": user.username},
+            {"email": user.email}
+        ]
+    })
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Username or email already exists")
+    
+    # Hash password (in production, use proper password hashing)
+    import hashlib
+    password_hash = hashlib.sha256(user.password.encode()).hexdigest()
+    
+    user_dict = user.dict()
+    user_dict["password_hash"] = password_hash
+    del user_dict["password"]  # Remove plain password
+    
+    user_obj = User(**user_dict)
+    await db.users.insert_one(user_obj.dict())
+    return user_obj
+
+@api_router.get("/users", response_model=List[User])
+async def get_users(shop_id: Optional[str] = None, role: Optional[UserRole] = None):
+    filter_dict = {}
+    if shop_id:
+        filter_dict["shop_id"] = shop_id
+    if role:
+        filter_dict["role"] = role
+    
+    users = await db.users.find(filter_dict).to_list(1000)
+    return [User(**user) for user in users]
+
+@api_router.get("/users/{user_id}", response_model=User)
+async def get_user(user_id: str):
+    user = await db.users.find_one({"id": user_id})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return User(**user)
+
+@api_router.put("/users/{user_id}", response_model=User)
+async def update_user(user_id: str, user_update: UserUpdate):
+    update_data = {k: v for k, v in user_update.dict().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    
+    update_data["updated_at"] = datetime.utcnow()
+    
+    result = await db.users.update_one({"id": user_id}, {"$set": update_data})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    updated_user = await db.users.find_one({"id": user_id})
+    return User(**updated_user)
+
+@api_router.delete("/users/{user_id}")
+async def delete_user(user_id: str):
+    result = await db.users.delete_one({"id": user_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {"message": "User deleted successfully"}
+
+
 # =================== SUPPLIER ENDPOINTS ===================
 
 @api_router.post("/suppliers", response_model=Supplier)
