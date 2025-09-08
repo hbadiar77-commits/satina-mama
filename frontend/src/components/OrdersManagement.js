@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CurrencyAmount from './CurrencyAmount';
 import PrintableInvoice from './PrintableInvoice';
+import PrintableReport from './PrintableReport';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
