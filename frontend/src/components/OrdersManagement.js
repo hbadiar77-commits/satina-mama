@@ -258,12 +258,20 @@ const OrdersManagement = () => {
                     {new Date(order.created_at).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button
-                      onClick={() => viewOrderDetails(order.id)}
-                      className="text-indigo-600 hover:text-indigo-900"
-                    >
-                      👁️ Voir
-                    </button>
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => viewOrderDetails(order.id)}
+                        className="text-indigo-600 hover:text-indigo-900"
+                      >
+                        👁️ Voir
+                      </button>
+                      <button
+                        onClick={() => printInvoice(order.id)}
+                        className="text-green-600 hover:text-green-900"
+                      >
+                        🖨️ Facture
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
