@@ -15,6 +15,7 @@ const CustomersManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [showCustomerDetails, setShowCustomerDetails] = useState(false);
+  const [showReport, setShowReport] = useState(false);
 
   const [newCustomer, setNewCustomer] = useState({
     name: "",
