@@ -398,6 +398,16 @@ const OrdersManagement = () => {
           }}
         />
       )}
+
+      {/* Printable Report */}
+      {showReport && (
+        <PrintableReport
+          type="orders"
+          data={orders}
+          title="Rapport des Commandes"
+          onClose={() => setShowReport(false)}
+        />
+      )}
     </div>
   );
 };
