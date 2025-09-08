@@ -11,6 +11,7 @@ import uuid
 from datetime import datetime, date
 from enum import Enum
 from decimal import Decimal
+from ai_services import AIServices
 
 
 ROOT_DIR = Path(__file__).parent
