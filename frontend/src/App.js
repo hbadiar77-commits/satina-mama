@@ -29,6 +29,11 @@ const Navigation = () => {
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-blue-400">Commerce Pro</h1>
         <p className="text-gray-400 text-sm">Gestion de Magasin</p>
+        
+        {/* Currency Selector */}
+        <div className="mt-4 pt-4 border-t border-gray-700">
+          <CurrencySelector className="text-white" />
+        </div>
       </div>
       
       <ul className="space-y-2">
