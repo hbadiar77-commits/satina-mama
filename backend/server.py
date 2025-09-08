@@ -272,6 +272,7 @@ class CategoryUpdate(BaseModel):
 # Product Models
 class Product(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    shop_id: str
     name: str
     description: Optional[str] = None
     price: float  # Stored in base currency (GNF)
