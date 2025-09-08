@@ -858,6 +858,7 @@ function App() {
                 <Route path="/products" element={<ProductsManagement />} />
                 <Route path="/orders" element={<OrdersManagement />} />
                 <Route path="/customers" element={<CustomersManagement />} />
+                <Route path="/suppliers" element={<SuppliersManagement />} />
                 <Route path="/stock" element={<StockManagement />} />
               </Routes>
             </div>
