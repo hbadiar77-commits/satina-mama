@@ -199,6 +199,7 @@ class ShopUpdate(BaseModel):
 # Supplier Models
 class Supplier(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    shop_id: str
     name: str
     company: Optional[str] = None
     contact_person: Optional[str] = None
