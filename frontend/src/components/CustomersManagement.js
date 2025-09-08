@@ -431,6 +431,16 @@ const CustomersManagement = () => {
           </div>
         </div>
       )}
+
+      {/* Printable Report */}
+      {showReport && (
+        <PrintableReport
+          type="customers"
+          data={customers}
+          title="Rapport des Clients"
+          onClose={() => setShowReport(false)}
+        />
+      )}
     </div>
   );
 };
