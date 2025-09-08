@@ -258,6 +258,7 @@ class Category(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class CategoryCreate(BaseModel):
+    shop_id: str
     name: str
     description: Optional[str] = None
     parent_id: Optional[str] = None
