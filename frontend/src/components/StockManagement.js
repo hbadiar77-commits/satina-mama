@@ -13,6 +13,8 @@ const StockManagement = () => {
   const [showMovementForm, setShowMovementForm] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [activeTab, setActiveTab] = useState("overview");
+  const [showReport, setShowReport] = useState(false);
+  const [reportData, setReportData] = useState(null);
 
   const [newMovement, setNewMovement] = useState({
     product_id: "",
