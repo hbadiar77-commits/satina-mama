@@ -129,12 +129,20 @@ const CustomersManagement = () => {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">Gestion des Clients</h1>
-        <button
-          onClick={() => setShowAddForm(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium"
-        >
-          ➕ Ajouter Client
-        </button>
+        <div className="space-x-2">
+          <button
+            onClick={printCustomersReport}
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium"
+          >
+            🖨️ Rapport Clients
+          </button>
+          <button
+            onClick={() => setShowAddForm(true)}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium"
+          >
+            ➕ Ajouter Client
+          </button>
+        </div>
       </div>
 
       {/* Search Bar */}
