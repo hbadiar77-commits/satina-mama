@@ -90,6 +90,112 @@ class CurrencySettingsUpdate(BaseModel):
 
 # =================== MODELS ===================
 
+# User and Role Models
+class UserRole(str, Enum):
+    OWNER = "owner"          # Propriétaire de la chaîne (accès tout)
+    MANAGER = "manager"      # Gérant de boutique (accès sa boutique)
+    CASHIER = "cashier"      # Caissier (POS uniquement)
+
+class User(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    username: str
+    email: str
+    password_hash: str
+    full_name: str
+    role: UserRole
+    shop_id: Optional[str] = None  # None for OWNER, specific shop for others
+    is_active: bool = True
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+class UserCreate(BaseModel):
+    username: str
+    email: str
+    password: str
+    full_name: str
+    role: UserRole
+    shop_id: Optional[str] = None
+
+class UserUpdate(BaseModel):
+    email: Optional[str] = None
+    full_name: Optional[str] = None
+    role: Optional[UserRole] = None
+    shop_id: Optional[str] = None
+    is_active: Optional[bool] = None
+
+# Shop Models
+class Shop(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    business_name: Optional[str] = None
+    description: Optional[str] = None
+    logo_url: Optional[str] = None
+    
+    # Contact Information
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    website: Optional[str] = None
+    
+    # Address
+    address: Optional[str] = None
+    city: Optional[str] = None
+    postal_code: Optional[str] = None
+    country: Optional[str] = None
+    
+    # Legal Information
+    registration_number: Optional[str] = None  # RCCM
+    tax_id: Optional[str] = None              # NIF
+    vat_number: Optional[str] = None
+    
+    # Business Settings
+    default_currency: Currency = Currency.GNF
+    tax_rate: float = 0.1  # 10% default
+    
+    # Status
+    is_active: bool = True
+    owner_id: str
+    
+    # Timestamps
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+class ShopCreate(BaseModel):
+    name: str
+    business_name: Optional[str] = None
+    description: Optional[str] = None
+    logo_url: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    website: Optional[str] = None
+    address: Optional[str] = None
+    city: Optional[str] = None
+    postal_code: Optional[str] = None
+    country: Optional[str] = None
+    registration_number: Optional[str] = None
+    tax_id: Optional[str] = None
+    vat_number: Optional[str] = None
+    default_currency: Currency = Currency.GNF
+    tax_rate: float = 0.1
+
+class ShopUpdate(BaseModel):
+    name: Optional[str] = None
+    business_name: Optional[str] = None
+    description: Optional[str] = None
+    logo_url: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    website: Optional[str] = None
+    address: Optional[str] = None
+    city: Optional[str] = None
+    postal_code: Optional[str] = None
+    country: Optional[str] = None
+    registration_number: Optional[str] = None
+    tax_id: Optional[str] = None
+    vat_number: Optional[str] = None
+    default_currency: Optional[Currency] = None
+    tax_rate: Optional[float] = None
+    is_active: Optional[bool] = None
+
 # Supplier Models
 class Supplier(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
