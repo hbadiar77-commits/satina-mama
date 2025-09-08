@@ -361,6 +361,84 @@ async def convert_currency(amount: float, from_currency: Currency, to_currency: 
     }
 
 
+# =================== SUPPLIER ENDPOINTS ===================
+
+@api_router.post("/suppliers", response_model=Supplier)
+async def create_supplier(supplier: SupplierCreate):
+    supplier_dict = supplier.dict()
+    supplier_obj = Supplier(**supplier_dict)
+    await db.suppliers.insert_one(supplier_obj.dict())
+    return supplier_obj
+
+@api_router.get("/suppliers", response_model=List[Supplier])
+async def get_suppliers(
+    search: Optional[str] = None,
+    is_active: Optional[bool] = None
+):
+    filter_dict = {}
+    
+    if is_active is not None:
+        filter_dict["is_active"] = is_active
+    if search:
+        filter_dict["$or"] = [
+            {"name": {"$regex": search, "$options": "i"}},
+            {"company": {"$regex": search, "$options": "i"}},
+            {"contact_person": {"$regex": search, "$options": "i"}},
+            {"email": {"$regex": search, "$options": "i"}},
+            {"phone": {"$regex": search, "$options": "i"}}
+        ]
+    
+    suppliers = await db.suppliers.find(filter_dict).to_list(1000)
+    return [Supplier(**supplier) for supplier in suppliers]
+
+@api_router.get("/suppliers/{supplier_id}", response_model=Supplier)
+async def get_supplier(supplier_id: str):
+    supplier = await db.suppliers.find_one({"id": supplier_id})
+    if not supplier:
+        raise HTTPException(status_code=404, detail="Supplier not found")
+    return Supplier(**supplier)
+
+@api_router.put("/suppliers/{supplier_id}", response_model=Supplier)
+async def update_supplier(supplier_id: str, supplier_update: SupplierUpdate):
+    update_data = {k: v for k, v in supplier_update.dict().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    
+    update_data["updated_at"] = datetime.utcnow()
+    
+    result = await db.suppliers.update_one({"id": supplier_id}, {"$set": update_data})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Supplier not found")
+    
+    updated_supplier = await db.suppliers.find_one({"id": supplier_id})
+    return Supplier(**updated_supplier)
+
+@api_router.delete("/suppliers/{supplier_id}")
+async def delete_supplier(supplier_id: str):
+    # Check if supplier has products
+    products_count = await db.products.count_documents({"supplier_id": supplier_id})
+    if products_count > 0:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Cannot delete supplier. {products_count} products are linked to this supplier."
+        )
+    
+    result = await db.suppliers.delete_one({"id": supplier_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Supplier not found")
+    return {"message": "Supplier deleted successfully"}
+
+@api_router.get("/suppliers/{supplier_id}/products", response_model=List[Product])
+async def get_supplier_products(supplier_id: str):
+    # Verify supplier exists
+    supplier = await db.suppliers.find_one({"id": supplier_id})
+    if not supplier:
+        raise HTTPException(status_code=404, detail="Supplier not found")
+    
+    products = await db.products.find({"supplier_id": supplier_id}).to_list(1000)
+    return [Product(**product) for product in products]
+
+
 # =================== CATEGORY ENDPOINTS ===================
 
 @api_router.post("/categories", response_model=Category)
