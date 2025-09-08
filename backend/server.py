@@ -402,6 +402,7 @@ class StockMovement(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class StockMovementCreate(BaseModel):
+    shop_id: str
     product_id: str
     movement_type: str
     quantity: int
