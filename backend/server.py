@@ -393,6 +393,7 @@ class OrderUpdate(BaseModel):
 # Stock Movement Models
 class StockMovement(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    shop_id: str
     product_id: str
     movement_type: str  # "in", "out", "adjustment"
     quantity: int
