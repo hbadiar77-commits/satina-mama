@@ -197,6 +197,7 @@ class ProductUpdate(BaseModel):
     price: Optional[float] = None
     cost_price: Optional[float] = None
     category_id: Optional[str] = None
+    supplier_id: Optional[str] = None
     sku: Optional[str] = None
     barcode: Optional[str] = None
     stock_quantity: Optional[int] = None
