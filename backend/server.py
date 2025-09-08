@@ -332,6 +332,7 @@ class Customer(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class CustomerCreate(BaseModel):
+    shop_id: str
     name: str
     email: Optional[str] = None
     phone: Optional[str] = None
