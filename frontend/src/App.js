@@ -302,6 +302,7 @@ const ProductsManagement = () => {
       price: product.price.toString(),
       cost_price: product.cost_price?.toString() || "",
       category_id: product.category_id || "",
+      supplier_id: product.supplier_id || "",
       sku: product.sku || "",
       barcode: product.barcode || "",
       stock_quantity: product.stock_quantity.toString(),
