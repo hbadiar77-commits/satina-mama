@@ -321,6 +321,7 @@ class ProductUpdate(BaseModel):
 # Customer Models
 class Customer(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    shop_id: str
     name: str
     email: Optional[str] = None
     phone: Optional[str] = None
