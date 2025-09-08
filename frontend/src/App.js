@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
 import axios from "axios";
+import { CurrencyProvider } from './components/CurrencyContext';
+import CurrencySelector from './components/CurrencySelector';
+import CurrencyAmount from './components/CurrencyAmount';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
