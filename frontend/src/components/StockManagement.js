@@ -102,6 +102,11 @@ const StockManagement = () => {
     setShowMovementForm(true);
   };
 
+  const printStockReport = () => {
+    setReportData(products);
+    setShowReport(true);
+  };
+
   const getMovementTypeIcon = (type) => {
     switch (type) {
       case 'in': return '📦';
