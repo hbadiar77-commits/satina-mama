@@ -376,6 +376,7 @@ class Order(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class OrderCreate(BaseModel):
+    shop_id: str
     customer_id: Optional[str] = None
     customer_name: Optional[str] = None
     items: List[OrderItem]
