@@ -880,27 +880,29 @@ import PrintableReport from './components/PrintableReport';
 // Main App Component
 function App() {
   return (
-    <CurrencyProvider>
-      <div className="App bg-gray-100 min-h-screen">
-        <BrowserRouter>
-          <div className="flex">
-            <Navigation />
-            <div className="flex-1">
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/pos" element={<POSSystem />} />
-                <Route path="/products" element={<ProductsManagement />} />
-                <Route path="/orders" element={<OrdersManagement />} />
-                <Route path="/customers" element={<CustomersManagement />} />
-                <Route path="/suppliers" element={<SuppliersManagement />} />
-                <Route path="/stock" element={<StockManagement />} />
-                <Route path="/shops" element={<ShopManagement />} />
-              </Routes>
+    <ShopProvider>
+      <CurrencyProvider>
+        <div className="App bg-gray-100 min-h-screen">
+          <BrowserRouter>
+            <div className="flex">
+              <Navigation />
+              <div className="flex-1">
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/pos" element={<POSSystem />} />
+                  <Route path="/products" element={<ProductsManagement />} />
+                  <Route path="/orders" element={<OrdersManagement />} />
+                  <Route path="/customers" element={<CustomersManagement />} />
+                  <Route path="/suppliers" element={<SuppliersManagement />} />
+                  <Route path="/stock" element={<StockManagement />} />
+                  <Route path="/shops" element={<ShopManagement />} />
+                </Routes>
+              </div>
             </div>
-          </div>
-        </BrowserRouter>
-      </div>
-    </CurrencyProvider>
+          </BrowserRouter>
+        </div>
+      </CurrencyProvider>
+    </ShopProvider>
   );
 }
 
