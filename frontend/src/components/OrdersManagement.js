@@ -373,6 +373,19 @@ const OrdersManagement = () => {
           </div>
         </div>
       )}
+      
+      {/* Printable Invoice */}
+      {showInvoice && selectedOrder && (
+        <PrintableInvoice
+          order={selectedOrder}
+          customer={selectedCustomer}
+          onClose={() => {
+            setShowInvoice(false);
+            setSelectedOrder(null);
+            setSelectedCustomer(null);
+          }}
+        />
+      )}
     </div>
   );
 };
