@@ -12,6 +12,8 @@ const OrdersManagement = () => {
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showOrderDetails, setShowOrderDetails] = useState(false);
+  const [showInvoice, setShowInvoice] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [filters, setFilters] = useState({
     status: "",
     customer_id: "",
