@@ -838,6 +838,8 @@ const POSSystem = () => {
 import OrdersManagement from './components/OrdersManagement';
 import CustomersManagement from './components/CustomersManagement';
 import StockManagement from './components/StockManagement';
+import PrintableInvoice from './components/PrintableInvoice';
+import PrintableReport from './components/PrintableReport';
 
 // Main App Component
 function App() {
