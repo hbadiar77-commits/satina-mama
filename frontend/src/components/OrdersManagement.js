@@ -112,6 +112,30 @@ const OrdersManagement = () => {
     }
   };
 
+  const printInvoice = async (orderId) => {
+    try {
+      const orderResponse = await axios.get(`${API}/orders/${orderId}`);
+      const order = orderResponse.data;
+      
+      let customer = null;
+      if (order.customer_id) {
+        try {
+          const customerResponse = await axios.get(`${API}/customers/${order.customer_id}`);
+          customer = customerResponse.data;
+        } catch (err) {
+          console.warn("Impossible de charger les détails du client:", err);
+        }
+      }
+      
+      setSelectedOrder(order);
+      setSelectedCustomer(customer);
+      setShowInvoice(true);
+    } catch (error) {
+      console.error("Erreur lors du chargement de la commande:", error);
+      alert("Erreur lors du chargement de la commande");
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
