@@ -167,6 +167,7 @@ class Product(BaseModel):
     price: float  # Stored in base currency (GNF)
     cost_price: Optional[float] = None
     category_id: Optional[str] = None
+    supplier_id: Optional[str] = None
     sku: Optional[str] = None
     barcode: Optional[str] = None
     stock_quantity: int = 0
