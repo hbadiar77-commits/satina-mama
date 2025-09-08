@@ -795,19 +795,19 @@ const POSSystem = () => {
           <div className="border-t pt-4 space-y-2">
             <div className="flex justify-between text-sm">
               <span>Sous-total:</span>
-              <span>{totals.subtotal.toFixed(2)}€</span>
+              <span><CurrencyAmount amount={totals.subtotal} /></span>
             </div>
             <div className="flex justify-between text-sm">
               <span>Remise:</span>
-              <span>-{totals.discountAmount.toFixed(2)}€</span>
+              <span>-<CurrencyAmount amount={totals.discountAmount} /></span>
             </div>
             <div className="flex justify-between text-sm">
               <span>Taxes (10%):</span>
-              <span>{totals.taxAmount.toFixed(2)}€</span>
+              <span><CurrencyAmount amount={totals.taxAmount} /></span>
             </div>
             <div className="flex justify-between text-lg font-bold border-t pt-2">
               <span>Total:</span>
-              <span>{totals.total.toFixed(2)}€</span>
+              <span><CurrencyAmount amount={totals.total} /></span>
             </div>
           </div>
 
