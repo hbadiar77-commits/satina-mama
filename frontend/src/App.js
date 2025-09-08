@@ -467,6 +467,7 @@ const ProductsManagement = () => {
                       price: "",
                       cost_price: "",
                       category_id: "",
+                      supplier_id: "",
                       sku: "",
                       barcode: "",
                       stock_quantity: "",
