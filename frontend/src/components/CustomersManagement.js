@@ -274,7 +274,7 @@ const CustomersManagement = () => {
                     <div className="text-sm text-gray-500">{customer.postal_code || "-"}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {customer.total_purchases?.toFixed(2)}€
+                    <CurrencyAmount amount={customer.total_purchases || 0} />
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
