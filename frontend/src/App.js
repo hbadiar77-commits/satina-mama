@@ -841,23 +841,25 @@ import StockManagement from './components/StockManagement';
 // Main App Component
 function App() {
   return (
-    <div className="App bg-gray-100 min-h-screen">
-      <BrowserRouter>
-        <div className="flex">
-          <Navigation />
-          <div className="flex-1">
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/pos" element={<POSSystem />} />
-              <Route path="/products" element={<ProductsManagement />} />
-              <Route path="/orders" element={<OrdersManagement />} />
-              <Route path="/customers" element={<CustomersManagement />} />
-              <Route path="/stock" element={<StockManagement />} />
-            </Routes>
+    <CurrencyProvider>
+      <div className="App bg-gray-100 min-h-screen">
+        <BrowserRouter>
+          <div className="flex">
+            <Navigation />
+            <div className="flex-1">
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/pos" element={<POSSystem />} />
+                <Route path="/products" element={<ProductsManagement />} />
+                <Route path="/orders" element={<OrdersManagement />} />
+                <Route path="/customers" element={<CustomersManagement />} />
+                <Route path="/stock" element={<StockManagement />} />
+              </Routes>
+            </div>
           </div>
-        </div>
-      </BrowserRouter>
-    </div>
+        </BrowserRouter>
+      </div>
+    </CurrencyProvider>
   );
 }
 
