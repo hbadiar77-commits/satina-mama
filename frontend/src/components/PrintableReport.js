@@ -143,6 +143,71 @@ const PrintableReport = ({ type, data, title, onClose }) => {
     </div>
   );
 
+  const renderSuppliersReport = () => (
+    <div>
+      <table className="w-full border-collapse border border-gray-300 mb-6">
+        <thead>
+          <tr className="bg-gray-100 print:bg-gray-200">
+            <th className="border border-gray-300 px-4 py-3 text-left print:px-2 print:py-2">Fournisseur</th>
+            <th className="border border-gray-300 px-4 py-3 text-left print:px-2 print:py-2">Contact</th>
+            <th className="border border-gray-300 px-4 py-3 text-left print:px-2 print:py-2">Localisation</th>
+            <th className="border border-gray-300 px-4 py-3 text-center print:px-2 print:py-2">Statut</th>
+            <th className="border border-gray-300 px-4 py-3 text-center print:px-2 print:py-2">Date Création</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((supplier, index) => (
+            <tr key={index}>
+              <td className="border border-gray-300 px-4 py-3 print:px-2 print:py-2">
+                <div className="font-medium">{supplier.name}</div>
+                {supplier.company && (
+                  <div className="text-sm text-gray-600 print:text-gray-800">{supplier.company}</div>
+                )}
+                {supplier.tax_id && (
+                  <div className="text-xs text-gray-500 print:text-gray-700">N° Fiscal: {supplier.tax_id}</div>
+                )}
+              </td>
+              <td className="border border-gray-300 px-4 py-3 print:px-2 print:py-2">
+                {supplier.contact_person && <div>{supplier.contact_person}</div>}
+                {supplier.phone && <div className="text-sm">{supplier.phone}</div>}
+                {supplier.email && <div className="text-sm text-gray-600 print:text-gray-800">{supplier.email}</div>}
+              </td>
+              <td className="border border-gray-300 px-4 py-3 print:px-2 print:py-2">
+                {supplier.address && <div className="text-sm">{supplier.address}</div>}
+                {supplier.city && <div>{supplier.city}</div>}
+                {supplier.country && <div className="text-sm text-gray-600 print:text-gray-800">{supplier.country}</div>}
+              </td>
+              <td className="border border-gray-300 px-4 py-3 text-center print:px-2 print:py-2">
+                <span className={`px-2 py-1 text-xs font-semibold rounded print:rounded-none ${
+                  supplier.is_active ? 'bg-green-100 text-green-800 print:bg-green-200' : 'bg-red-100 text-red-800 print:bg-red-200'
+                }`}>
+                  {supplier.is_active ? 'Actif' : 'Inactif'}
+                </span>
+              </td>
+              <td className="border border-gray-300 px-4 py-3 text-center print:px-2 print:py-2">
+                {new Date(supplier.created_at).toLocaleDateString('fr-FR')}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* Summary */}
+      <div className="grid grid-cols-2 gap-4 mt-6">
+        <div className="bg-blue-50 print:bg-blue-100 print:border print:border-blue-300 p-4 rounded print:rounded-none text-center">
+          <div className="text-2xl font-bold text-blue-600">{data.length}</div>
+          <div className="text-sm text-blue-800">Total Fournisseurs</div>
+        </div>
+        <div className="bg-green-50 print:bg-green-100 print:border print:border-green-300 p-4 rounded print:rounded-none text-center">
+          <div className="text-2xl font-bold text-green-600">
+            {data.filter(s => s.is_active).length}
+          </div>
+          <div className="text-sm text-green-800">Fournisseurs Actifs</div>
+        </div>
+      </div>
+    </div>
+  );
+
   const renderOrdersReport = () => (
     <div>
       <table className="w-full border-collapse border border-gray-300 mb-6">
