@@ -140,7 +140,8 @@ class ProductCreate(BaseModel):
     is_active: bool = True
 
 class ProductUpdate(BaseModel):
-    name: Optional[str] = None description: Optional[str] = None
+    name: Optional[str] = None
+    description: Optional[str] = None
     price: Optional[float] = None
     cost_price: Optional[float] = None
     category_id: Optional[str] = None
