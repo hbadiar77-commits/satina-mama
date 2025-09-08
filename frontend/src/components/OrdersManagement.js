@@ -138,6 +138,10 @@ const OrdersManagement = () => {
     }
   };
 
+  const printOrdersReport = () => {
+    setShowReport(true);
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
