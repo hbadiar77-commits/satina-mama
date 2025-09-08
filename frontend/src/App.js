@@ -894,6 +894,7 @@ function App() {
                 <Route path="/customers" element={<CustomersManagement />} />
                 <Route path="/suppliers" element={<SuppliersManagement />} />
                 <Route path="/stock" element={<StockManagement />} />
+                <Route path="/shops" element={<ShopManagement />} />
               </Routes>
             </div>
           </div>
