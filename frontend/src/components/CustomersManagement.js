@@ -289,12 +289,6 @@ const CustomersManagement = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     <CurrencyAmount amount={customer.total_purchases || 0} />
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <span className="text-sm text-gray-900">{customer.loyalty_points}</span>
-                      <span className="ml-1 text-yellow-500">⭐</span>
-                    </div>
-                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <button
                       onClick={() => viewCustomerDetails(customer)}
