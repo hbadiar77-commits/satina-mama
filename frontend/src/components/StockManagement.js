@@ -137,12 +137,20 @@ const StockManagement = () => {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">Gestion du Stock</h1>
-        <button
-          onClick={() => setShowMovementForm(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium"
-        >
-          📋 Nouveau Mouvement
-        </button>
+        <div className="space-x-2">
+          <button
+            onClick={printStockReport}
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium"
+          >
+            🖨️ Rapport Stock
+          </button>
+          <button
+            onClick={() => setShowMovementForm(true)}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium"
+          >
+            📋 Nouveau Mouvement
+          </button>
+        </div>
       </div>
 
       {/* Tabs */}
