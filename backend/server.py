@@ -359,6 +359,7 @@ class OrderItem(BaseModel):
 
 class Order(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    shop_id: str
     customer_id: Optional[str] = None
     customer_name: Optional[str] = None
     items: List[OrderItem]
