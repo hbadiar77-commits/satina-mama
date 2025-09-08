@@ -218,6 +218,7 @@ class Supplier(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class SupplierCreate(BaseModel):
+    shop_id: str
     name: str
     company: Optional[str] = None
     contact_person: Optional[str] = None
