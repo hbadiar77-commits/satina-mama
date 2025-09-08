@@ -224,6 +224,7 @@ const ProductsManagement = () => {
   useEffect(() => {
     fetchProducts();
     fetchCategories();
+    fetchSuppliers();
   }, []);
 
   const fetchProducts = async () => {
