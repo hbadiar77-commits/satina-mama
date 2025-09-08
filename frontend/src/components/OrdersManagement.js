@@ -318,7 +318,7 @@ const OrdersManagement = () => {
                           {item.quantity}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          {item.total_price?.toFixed(2)}€
+                          <CurrencyAmount amount={item.total_price || 0} />
                         </td>
                       </tr>
                     ))}
