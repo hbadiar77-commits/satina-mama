@@ -711,7 +711,9 @@ const POSSystem = () => {
                   className="border border-gray-200 rounded-lg p-3 hover:bg-blue-50 cursor-pointer transition-colors"
                 >
                   <h3 className="font-medium text-sm mb-1">{product.name}</h3>
-                  <p className="text-green-600 font-semibold">{product.price.toFixed(2)}€</p>
+                  <p className="text-green-600 font-semibold">
+                    <CurrencyAmount amount={product.price} />
+                  </p>
                   <p className="text-gray-500 text-xs">Stock: {product.stock_quantity}</p>
                 </div>
               ))}
