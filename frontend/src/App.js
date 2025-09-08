@@ -871,6 +871,7 @@ import OrdersManagement from './components/OrdersManagement';
 import CustomersManagement from './components/CustomersManagement';
 import SuppliersManagement from './components/SuppliersManagement';
 import StockManagement from './components/StockManagement';
+import ShopManagement from './components/ShopManagement';
 import PrintableInvoice from './components/PrintableInvoice';
 import PrintableReport from './components/PrintableReport';
 
