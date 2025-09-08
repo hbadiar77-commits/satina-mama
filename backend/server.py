@@ -90,6 +90,56 @@ class CurrencySettingsUpdate(BaseModel):
 
 # =================== MODELS ===================
 
+# Supplier Models
+class Supplier(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    company: Optional[str] = None
+    contact_person: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    address: Optional[str] = None
+    city: Optional[str] = None
+    postal_code: Optional[str] = None
+    country: Optional[str] = None
+    tax_id: Optional[str] = None
+    payment_terms: Optional[str] = None
+    notes: Optional[str] = None
+    is_active: bool = True
+    total_orders: float = 0.0
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+class SupplierCreate(BaseModel):
+    name: str
+    company: Optional[str] = None
+    contact_person: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    address: Optional[str] = None
+    city: Optional[str] = None
+    postal_code: Optional[str] = None
+    country: Optional[str] = None
+    tax_id: Optional[str] = None
+    payment_terms: Optional[str] = None
+    notes: Optional[str] = None
+    is_active: bool = True
+
+class SupplierUpdate(BaseModel):
+    name: Optional[str] = None
+    company: Optional[str] = None
+    contact_person: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    address: Optional[str] = None
+    city: Optional[str] = None
+    postal_code: Optional[str] = None
+    country: Optional[str] = None
+    tax_id: Optional[str] = None
+    payment_terms: Optional[str] = None
+    notes: Optional[str] = None
+    is_active: Optional[bool] = None
+
 # Category Models
 class Category(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
